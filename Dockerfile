@@ -32,4 +32,4 @@ USER 1000
 EXPOSE 8080
 EXPOSE 8443
 
-ENTRYPOINT [ "/opt/keycloak/bin/kc.sh" ]
+ENTRYPOINT [ "/opt/keycloak/bin/kc.sh", "--log=console,gelf", "--log-gelf-host=localhost", "--log-gelf-port=12201"]
