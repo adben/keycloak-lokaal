@@ -67,9 +67,9 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash:8.5.1
     ports:
-      - "12201:12201/udp"
-      - "5000:5000"
-      - "9600:9600"
+      - 12201:12201/udp
+      - 5000:5000
+      - 9600:9600
     environment:
       - SERVERNAME=logstash
       - ELASTICSEARCH_HOSTS=https://elasticsearch:9200
@@ -110,6 +110,11 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: keycloak
+    volumes:
+      - ./keycloak/:/opt/keycloak/data/import/
+    ports:
+      - 8080:8080
+      - 8443:8443
     networks:
       - elastic
     depends_on:
