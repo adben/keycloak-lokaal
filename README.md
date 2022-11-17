@@ -4,26 +4,26 @@ Identity and Access Management
 
 ## Custom keycloak
 
-Build de image
+Build
 
 ```shell
-podman build . -t mykeycloak
+docker compose build
 ```
 
-Run de image
+Run
 
 ```shell
-podman run --name mykeycloak -p 8443:8443 \
- -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=change_me \
- mykeycloak \
- start --optimized
+docker compose up
 ```
 
-develop mode
+Stop en remove de deployment
 
 ```shell
-podman run --name mykeycloak -p 8080:8080 \
- -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=change_me \
- mykeycloak \
- start-dev
+docker-compose down
+```
+
+To delete the network, containers, and volumes when you stop the cluster, specify the -v option:
+
+```shell
+docker-compose down -v
 ```
