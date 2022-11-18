@@ -68,18 +68,13 @@ services:
     image: docker.elastic.co/logstash/logstash:8.5.1
     ports:
       - 12201:12201/udp
-      - 5000:5000
-      - 9600:9600
-    environment:
-      - SERVERNAME=logstash
-      - ELASTICSEARCH_HOSTS=https://elasticsearch:9200
     healthcheck:
       test: bin/logstash -t
       interval: 60s
       timeout: 50s
       retries: 5
     volumes:
-      - ./pipeline/gelf.conf:/usr/share/logstash/pipeline/gelf.conf
+      - ./pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     networks:
       - elastic
     depends_on:
@@ -112,15 +107,19 @@ services:
     container_name: keycloak
     volumes:
       - ./keycloak/:/opt/keycloak/data/import/
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://0.0.0.0:12201"
+        tag: "log-keycloak-tag-docker"
     ports:
       - 8080:8080
       - 8443:8443
     networks:
       - elastic
     depends_on:
-      kibana:
-        condition: service_healthy
-
+      - elasticsearch
+      - logstash
 volumes:
   data01:
     driver: local
