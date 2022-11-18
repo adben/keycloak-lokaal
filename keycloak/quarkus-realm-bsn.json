@@ -1,6 +1,6 @@
 {
   "id" : "0395efe3-db9a-4daa-ab6a-d374f16216c7",
-  "realm" : "quarkus",
+  "realm" : "quarkus-bsn",
   "notBefore" : 0,
   "defaultSignatureAlgorithm" : "RS256",
   "revokeRefreshToken" : false,
