@@ -35,4 +35,4 @@ USER 1000
 EXPOSE 8080
 EXPOSE 8443
 
-ENTRYPOINT [ "/opt/keycloak/bin/kc.sh","start-dev", "--log=console,gelf", "--log-gelf-host=localhost", "--log-console-output=json","--log-level=DEBUG", "--log-gelf-port=12201" , "--import-realm"]
+ENTRYPOINT [ "/opt/keycloak/bin/kc.sh", "start-dev", "--log=console", "--log-level=INFO,org.keycloak.events:debug", "--log-console-output=json", "--import-realm"]

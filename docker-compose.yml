@@ -1,7 +1,7 @@
 version: '2.2'
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.7
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1
     container_name: elasticsearch
     environment:
       - node.name=elasticsearch
@@ -11,15 +11,15 @@ services:
       - bootstrap.memory_lock=true
       - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-#    healthcheck:
-#      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health?wait_for_status=green&timeout=1s", "||", "exit", "1" ]
-#      interval: 30s
-#      timeout: 30s
-#      retries: 3
-#    ulimits:
-#      memlock:
-#        soft: -1
-#        hard: -1
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health?wait_for_status=green&timeout=1s", "||", "exit", "1" ]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
       - data01:/usr/share/elasticsearch/data
     ports:
@@ -27,7 +27,7 @@ services:
     networks:
       - elastic
   es02:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.7
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1
     container_name: es02
     environment:
       - node.name=es02
@@ -46,7 +46,7 @@ services:
     networks:
       - elastic
   es03:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.7
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.1
     container_name: es03
     environment:
       - node.name=es03
@@ -65,27 +65,23 @@ services:
     networks:
       - elastic
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.17.7
+    image: docker.elastic.co/logstash/logstash:8.5.1
     ports:
       - 12201:12201/udp
-      - 5000:5000
-      - 9600:9600
-    environment:
-      - SERVERNAME=logstash
-      - ELASTICSEARCH_HOSTS=https://elasticsearch:9200
-#    healthcheck:
-#      test: bin/logstash -t
-#      interval: 60s
-#      timeout: 50s
-#      retries: 5
+    healthcheck:
+      test: bin/logstash -t
+      interval: 60s
+      timeout: 50s
+      retries: 5
     volumes:
-      - ./pipeline/gelf.conf:/usr/share/logstash/pipeline/gelf.conf
+      - ./pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     networks:
       - elastic
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.7
+    image: docker.elastic.co/kibana/kibana:8.5.1
     container_name: kibana
     environment:
       - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
@@ -93,16 +89,16 @@ services:
       - XPACK_MONITORING_ENABLED=false
     ports:
       - 5601:5601
-#    healthcheck:
-#      test: [ "CMD-SHELL", "curl --silent --fail localhost:5601/status", "||", "exit", "1" ]
-#      interval: 30s
-#      timeout: 30s
-#      retries: 3
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:5601/status", "||", "exit", "1" ]
+      interval: 30s
+      timeout: 30s
+      retries: 3
     networks:
       - elastic
-
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     restart: "unless-stopped"
   keycloak-lokaal:
     build:
@@ -111,15 +107,19 @@ services:
     container_name: keycloak
     volumes:
       - ./keycloak/:/opt/keycloak/data/import/
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://0.0.0.0:12201"
+        tag: "log-keycloak-tag-docker"
     ports:
       - 8080:8080
       - 8443:8443
     networks:
       - elastic
-
     depends_on:
-      - kibana
-
+      - elasticsearch
+      - logstash
 volumes:
   data01:
     driver: local
