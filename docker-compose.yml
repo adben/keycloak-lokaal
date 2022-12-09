@@ -19,6 +19,21 @@ services:
       - "8080:8080"
       - "8443:8443"
 
+  keycloak-ad1:
+    image: quay.io/keycloak/keycloak:20.0.1
+    container_name: keycloak_ad1
+    command:
+      - start-dev
+      - '--import-realm'
+    volumes:
+      - ./keycloak/fake-digid/:/opt/keycloak/data/import/
+    environment:
+      - KEYCLOAK_ADMIN=ictu
+      - KEYCLOAK_ADMIN_PASSWORD=ictu
+      - KC_PROXY=edge
+    ports:
+      - "9090:8080"
+
 networks:
   elastic:
     name: elastic

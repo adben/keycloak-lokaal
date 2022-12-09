@@ -29,3 +29,11 @@ docker-compose down -v
 ```
 
 Inloggen op ```http://0.0.0.0:8080/``` met de gebruikersnaam/pass "ictu":"ictu"
+
+
+## Exporteren realms
+_In_ de betreffende docker container run het volgende command:
+```bash
+mkdir -p /tmp/export
+/opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --users realm_file
+```
