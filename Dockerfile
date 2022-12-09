@@ -27,9 +27,6 @@ RUN microdnf update -y && \
     echo "keycloak:x:0:root" >> /etc/group && \
     echo "keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin" >> /etc/passwd
 
-ENV KEYCLOAK_ADMIN=ictu
-ENV KEYCLOAK_ADMIN_PASSWORD=ictu
-
 USER 1000
 
 EXPOSE 8080
