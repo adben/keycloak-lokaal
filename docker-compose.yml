@@ -34,6 +34,21 @@ services:
     ports:
       - "9090:8080"
 
+  keycloak-dv1:
+    image: quay.io/keycloak/keycloak:20.0.1
+    container_name: keycloak_dv1
+    command:
+      - start-dev
+      - '--import-realm'
+    volumes:
+      - ./keycloak/lutjebroek/:/opt/keycloak/data/import/
+    environment:
+      - KEYCLOAK_ADMIN=ictu
+      - KEYCLOAK_ADMIN_PASSWORD=ictu
+      - KC_PROXY=edge
+    ports:
+      - "9091:8080"
+
 networks:
   elastic:
     name: elastic
