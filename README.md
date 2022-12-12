@@ -37,3 +37,18 @@ _In_ de betreffende docker container run het volgende command:
 mkdir -p /tmp/export
 /opt/keycloak/bin/kc.sh export --dir /opt/keycloak/data/import --users realm_file
 ```
+
+Na de git push check status van het image op https://quay.io/repository/adolfobenedetti/keycloak?tab=builds
+
+Meer info check ```https://quay.io/tutorial/```
+
+## Template in openshift
+
+```shell
+oc process -f https://raw.githubusercontent.com/adben/keycloak-lokaal/main/keycloak.yaml \
+  -p KEYCLOAK_IMAGE=quay.io/adolfobenedetti/keycloak:lastest \
+  -p KEYCLOAK_ADMIN=adminXX \
+  -p KEYCLOAK_ADMIN_PASSWORD=adminXX \
+  -p NAMESPACE=keycloak | oc create -f -
+
+```
