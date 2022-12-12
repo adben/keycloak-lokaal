@@ -26,7 +26,8 @@ services:
       - start-dev
       - '--import-realm'
     volumes:
-      - ./keycloak/fake-digid/:/opt/keycloak/data/import/
+      - ./keycloak/fake-digid/realms/:/opt/keycloak/data/import/
+      - ./keycloak/fake-digid/theme/:/opt/keycloak/themes/fakedigid/
     environment:
       - KEYCLOAK_ADMIN=ictu
       - KEYCLOAK_ADMIN_PASSWORD=ictu

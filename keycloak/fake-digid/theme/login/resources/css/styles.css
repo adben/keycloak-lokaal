@@ -1,0 +1,18 @@
+:root {
+    --pf-global--primary-color--100: #e17000;
+    --pf-global--primary-color--200: #282828;
+    --default-background-color: white;
+    --link-hover-color: #02679a;
+}
+
+.login-pf body {
+    background: var(--default-background-color);
+}
+
+.pf-c-button.pf-m-primary {
+    font-weight: bold;
+}
+
+#kc-header {
+    color: var(--pf-global--primary-color--200)
+}
