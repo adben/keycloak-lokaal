@@ -46,7 +46,7 @@ Meer info check ```https://quay.io/tutorial/```
 
 ```shell
 oc process -f https://raw.githubusercontent.com/adben/keycloak-lokaal/main/keycloak.yaml \
-  -p KEYCLOAK_IMAGE=quay.io/adolfobenedetti/keycloak:lastest \
+  -p KEYCLOAK_IMAGE=quay.io/adolfobenedetti/keycloak:latest \
   -p KEYCLOAK_ADMIN=adminXX \
   -p KEYCLOAK_ADMIN_PASSWORD=adminXX \
   -p NAMESPACE=keycloak | oc create -f -

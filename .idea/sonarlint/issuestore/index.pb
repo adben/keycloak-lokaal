@@ -1,8 +1,7 @@
 
-R
-"keycloak/oidc-kc-realm-export.json,9\0\9061da3b1e114e7f94f2617afbf3e3ceeac800df
-O
-keycloak/quarkus-realm-bsn.json,c\6\c68ecc09986d81ec5c182de9e0356dfd8b7eea2a
-:
-
-Dockerfile,6\6\6651ddff6eb82c840ced7c1dddee15c6e1913dd4
+`
+0keycloak/fake-digid/theme/login/theme.properties,2/d/2df699c874e519f2b4f73f8580734897ff1bc5b5
+l
+<keycloak/fake-digid/theme/login/resources/img/fake-digid.svg,c/2/c29b505b25235bd6aa474f35245836b819a2bbe9
+h
+8keycloak/fake-digid/theme/login/resources/css/styles.css,0/a/0ad4c9879d9f82d23aca966ca9cd43b5d324fb0b

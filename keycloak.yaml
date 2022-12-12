@@ -96,6 +96,11 @@ objects:
       triggers:
         - type: ConfigChange
 parameters:
+  - name: KEYCLOAK_IMAGE
+    displayName: Application image to deploy
+    description: The image and version to deploy.
+    value: quay.io/adolfobenedetti/keycloak:latest
+    required: true
   - name: APPLICATION_NAME
     displayName: Application Name
     description: The name for the application.
