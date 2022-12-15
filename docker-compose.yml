@@ -16,7 +16,7 @@ services:
         gelf-address: "udp://0.0.0.0:12201"
         tag: "log-keycloak-tag-docker"
     ports:
-      - "8080:8080"
+      - "9999:8080"
       - "8443:8443"
 
   keycloak-ad1:
@@ -49,9 +49,4 @@ services:
       - KC_PROXY=edge
     ports:
       - "9091:8080"
-
-networks:
-  elastic:
-    name: elastic
-    driver: bridge
 
