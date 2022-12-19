@@ -20,7 +20,7 @@ services:
       - "8443:8443"
 
   keycloak-ad1:
-    image: quay.io/keycloak/keycloak:20.0.1
+    image: quay.io/keycloak/keycloak:20.0.2
     container_name: keycloak_ad1
     command:
       - start-dev
@@ -36,7 +36,7 @@ services:
       - "9090:8080"
 
   keycloak-dv1:
-    image: quay.io/keycloak/keycloak:20.0.1
+    image: quay.io/keycloak/keycloak:20.0.2
     container_name: keycloak_dv1
     command:
       - start-dev
